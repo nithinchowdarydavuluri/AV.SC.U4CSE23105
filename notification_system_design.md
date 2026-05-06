@@ -108,5 +108,33 @@ db.notifications.find({
 
 MongoDB provides a scalable and flexible solution for storing notifications. Using indexing, pagination, and caching helps improve performance as the number of notifications grows.
 
+# Stage 3
 
+## Existing Query
+
+sql
+SELECT * FROM notifications
+WHERE studentID = 1042
+AND isRead = false
+ORDER BY createdAt ASC;
+
+# Problems in the Query
+* "SELECT *" fetches all columns unnecessarily
+* Without indexes, the database performs a full table scan
+* Sorting large data using "ORDER BY" becomes slow
+# Improved Query
+sql
+SELECT id, notificationType, message, createdAt
+FROM notifications
+WHERE studentID = 1042
+AND isRead = false
+ORDER BY createdAt DESC;
+# Query to Find Students Who Got Placement Notifications in Last 7 Days
+sql
+SELECT DISTINCT studentID
+FROM notifications
+WHERE notificationType = 'Placement'
+AND createdAt >= NOW() - INTERVAL 7 DAY;
+
+* The main reason for slow performance is missing indexes and unnecessary data fetching. Using optimized queries and composite indexes improves scalability and response time for large notification systems.
 
