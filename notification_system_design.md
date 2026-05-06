@@ -167,4 +167,4 @@ Use:
 * Pagination
 * Redis caching
 * Socket.IO
-Using caching, pagination, and real-time updates helps reduce database load and improves notification system performance.
+Using caching, pagination, and real-time updates helps reduce database load and improves notification system performance
