@@ -20,8 +20,8 @@ json
   "_id": "1",
   "userId": "101",
   "type": "Placement",
-  "title": "Placement Drive",
-  "message": "TCS hiring starts tomorrow",
+  "title": "Placement ",
+  "message": "tomorrow",
 }
 
 # APIs
