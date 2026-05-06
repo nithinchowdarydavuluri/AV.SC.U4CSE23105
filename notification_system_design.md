@@ -168,3 +168,58 @@ Use:
 * Redis caching
 * Socket.IO
 Using caching, pagination, and real-time updates helps reduce database load and improves notification system performance
+
+# Stage 5
+
+# Notify All Optimization
+The current implementation sends emails and notifications one by one for 50,000 students. This approach is slow and unreliable because if the email service fails in between, some students may not receive notifications.
+# Problems in Current Implementation
+* Notifications are processed sequentially
+* Slow for large number of users
+* If email API fails, some students are skipped
+* High server load
+# Improved Solution
+Use a queue-based system with background workers.
+Instead of sending everything directly, notification jobs are added to a queue and processed asynchronously.
+# Recommended Technologies
+* Redis
+* Socket.IO
+# Improved Workflow
+
+hr clicks notify All->Notifications Added to queue->Workers Process Jobs->Save to Database->Send Email->Push Real-Time Notification
+
+# Why This is Better
+
+* Faster processing
+* Better scalability
+*Failed jobs can be retried
+* Reduces server load
+*More reliable for large traffic
+# Should DB Save and Email Happen Together?
+Saving notifications in DB and sending emails should be handled separately because email services can fail or become slow. Notifications should still be stored even if email delivery fails.
+# Revised Pseudocode
+js
+function notify_all(student_ids, message) {
+
+   for (student_id of student_ids) {
+
+      add_to_queue({
+         student_id,
+         message
+      })
+
+   }
+}
+## Worker
+js
+worker.process(async(job) => {
+
+   save_to_db(job.student_id, job.message)
+
+   send_email(job.student_id, job.message)
+
+   push_to_app(job.student_id, job.message)
+
+})
+
+Using queues and background workers makes the notification system faster, scalable, and more reliable for handling notifications for thousands of students.
