@@ -65,3 +65,48 @@ Socket.IO is used for real-time notification updates.
 # Conclusion
 The designed system supports secure APIs, pagination, unread tracking, filtering, and real-time notifications with a scalable backend architecture.
 
+# Stage 2
+
+# Database Design
+MongoDB is chosen for storing notifications because it is flexible, scalable, and works well for handling large amounts of  data.
+# Notification Schema
+{
+   userId: String,
+   type: String,
+   title: String,
+   message: String,
+   isRead: Boolean,
+}
+# Sample MongoDB Document
+json
+{
+  "userId": "101",
+  "type": "Placement",
+  "title": "Placement Drive",
+  "message": "tomorrow",
+  "isRead": false,
+}
+# Possible Problems as Data Increases
+* Slow query performance
+* Large database size
+* High server load
+# Solutions
+* Use pagination with page and limit.
+* Archive old notifications.
+* Use caching for frequently accessed data.
+
+# MongoDB Queries
+## Get All Notifications
+db.notifications.find({
+   userId: "101"
+})
+## Get Unread Notifications
+db.notifications.find({
+   userId: "101",
+   isRead: false
+})
+
+MongoDB provides a scalable and flexible solution for storing notifications. Using indexing, pagination, and caching helps improve performance as the number of notifications grows.
+
+
+
