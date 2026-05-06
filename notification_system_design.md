@@ -134,7 +134,37 @@ sql
 SELECT DISTINCT studentID
 FROM notifications
 WHERE notificationType = 'Placement'
-AND createdAt >= NOW() - INTERVAL 7 DAY;
+AND createdAt >= NOW()  INTERVAL 7 DAY;
 
 * The main reason for slow performance is missing indexes and unnecessary data fetching. Using optimized queries and composite indexes improves scalability and response time for large notification systems.
 
+# Stage 4
+
+# Performance Improvement
+Fetching notifications on every page load increases database load and slows down the application.
+# Problems
+* High database traffic
+*  Slow API response
+* Poor user experience
+# Solutions
+## 1. Pagination
+Use "page` and "limit" to fetch notifications in small batches.
+### Benefit
+* Reduces server load
+* Faster response time
+## 2. Redis Caching
+Store frequently used notifications in Redis.
+### Benefit
+* Reduces database queries
+* Improves speed
+## 3. Socket.IO
+Use real-time updates instead of fetching notifications repeatedly.
+## 4. Lazy Loading
+Load notifications only when needed.
+
+# Approach
+Use:
+* Pagination
+* Redis caching
+* Socket.IO
+Using caching, pagination, and real-time updates helps reduce database load and improves notification system performance.
